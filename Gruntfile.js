@@ -3,12 +3,20 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      dist: {
+      lib: {
         src: [
-            'public/client/*.js',
-            'public/lib/*.js'
+            'public/lib/jquery.js',
+            'public/lib/underscore.js',
+            'public/lib/backbone.js',
+            'public/lib/handlebars.js'
         ],
-        dest: 'public/dist/production.min.js',
+        dest: 'public/dist/lib.production.js'
+      },
+      app: {
+        src: [
+            'public/client/*.js'
+        ],
+        dest: 'public/dist/app.production.js'
       }
     },
 
@@ -28,10 +36,14 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      dist: {
-        src: 'public/dist/production.min.js',
-        dest: 'public/dist/production.min.js'
-      }
+      lib: {
+        src: 'public/dist/lib.production.js',
+        dest: 'public/dist/lib.production.min.js'
+      },
+      app: {
+        src: 'public/dist/app.production.js',
+        dest: 'public/dist/app.production.min.js'
+      },
     },
 
     jshint: {
@@ -123,6 +135,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build',
     'nodemon'
   ]);
 
